@@ -1,0 +1,4 @@
+File, Name, MidiInstrument
+data/input/CHIKUNGUNYA_timeseries_total.csv, Chikungunya, 73
+data/input/DENGUE_timeseries_total.csv, Dengue, 1
+data/input/ZIKA_timeseries_total.csv, Zika, 74
