@@ -243,6 +243,7 @@ def main():
     # Create a video with the incidence curves and the music
     video_rate = tempo / 60.0
     os.system('ffmpeg -r %d -i output/figures/BEATS_tmp_%%05d.png -i tmp.wav -c:v libx264 -c:a aac -shortest -pix_fmt yuv420p output.mp4 -y' % (video_rate))
+    os.system('rm %s/*' % (outfigs))
 
 #======================================================================
 # Call main 
