@@ -183,6 +183,7 @@ def main():
             description='Specify frequency, scale, tempo, and tonality' )
     parser.add_argument("-f", type = str,help = "Select the file with the timeseries", required = True)
     parser.add_argument("-s", type = str,help = "Scale in international notation", default  = 'C')
+    parser.add_argument("-o", type = str,help = "Video output", default  = 'output')
     parser.add_argument("-t", type = int,help = "Tempo [default 180]", default = 180)
     parser.add_argument("--minor", help = "Enable minor scale", default = False, action="store_true")
 
@@ -191,6 +192,7 @@ def main():
     scale = args.s
     tempo = math.floor(args.t / 60) * 60
     minor = args.minor
+    outvid = args.o
     
     score_stream = mus.stream.Score(id='mainScore')
     score_stream.insert(0, mus.metadata.Metadata())
@@ -242,15 +244,14 @@ def main():
         
     # Create a video with the incidence curves and the music
     video_rate = tempo / 60.0
-    os.system('ffmpeg -r %d -i output/figures/BEATS_tmp_%%05d.png -i tmp.wav -c:v libx264 -c:a aac -shortest -pix_fmt yuv420p output.mp4 -y' % (video_rate))
-    os.system('rm %s/*' % (outfigs))
-
+    os.system('ffmpeg -r %d -i output/figures/BEATS_tmp_%%05d.png -i tmp.wav -c:v libx264 -c:a aac -shortest -pix_fmt yuv420p %s.mp4 -y' % (video_rate,outvid))
+    os.system('rm tmp.mid')
+    os.system('rm tmp.wav')
+    os.system('rm -r ./output')
+    
 #======================================================================
 # Call main 
 #======================================================================
 if __name__ == '__main__':
     main()
 
-
-    #outbase = os.path.splitext(os.path.basename(tsfile))[0]
-    #creator.export_timeseries_notation('data/output/'+ outbase +'_notation.csv')
